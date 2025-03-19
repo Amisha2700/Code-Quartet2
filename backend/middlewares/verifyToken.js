@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
  export const verifyToken = async (req, resp, next) => {
     try {
         const bearerHeader = req.header("Authorization");
+        console.log("Authorization Header:", bearerHeader); // Debugging
         if (!bearerHeader) {
             return resp.status(403).json({ message: "Access Denied" });
         }
@@ -17,6 +18,7 @@ import jwt from "jsonwebtoken";
         }
     }
     catch(error){
+        console.log("error in verifying token!", error);
         resp.status(500).json({error:error.message});
     }
 };
