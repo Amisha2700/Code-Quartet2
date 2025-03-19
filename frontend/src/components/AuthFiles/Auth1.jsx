@@ -3,13 +3,13 @@ import axios from "axios";
 import "./Auth1.css";
 import { BASE_URL } from "../../helper";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/storetoken";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     emailid: "",
     password: "",
   });
-  const navigate = useNavigate();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,6 +17,9 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const navigate = useNavigate();
+  const { storeTokeninLS } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +43,8 @@ const Login = () => {
       
       if (response.data.success) {
         console.log("Login successful:", response.data);
-        alert("Login successful!"); // Replace with navigation logic if needed
+        storeTokeninLS(response.data.token);
+        // alert("Login successful!"); // Replace with navigation logic if needed
         navigate("/Home");
       }
       else {
