@@ -11,7 +11,7 @@ dotenv.config();//to load the environment variables
 
 app.use(express.json());
 
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/authRoutes.js";
 
 app.use("/auth",authRoutes);
 
