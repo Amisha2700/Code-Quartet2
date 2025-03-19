@@ -46,7 +46,7 @@ export const login=async(req,resp)=>{
         }
         const boolean=await bcrypt.compare(password,currentUser.password);
         if(!boolean){
-            return resp.status(401).json({message:"Invalid credentials. Please check again!"});
+            return resp.status(200).json({success: false, message:"Invalid credentials. Please check again!"});
         }
         const token=jwt.sign({emailid:emailid},key);
         console.log(token);
