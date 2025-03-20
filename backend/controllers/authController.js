@@ -19,7 +19,7 @@ export const register=async (req,resp)=>{
         }
         const existingUser = await User.findOne({ emailid });
         if (existingUser) {
-        return resp.status(400).json({ message: "Email already registered" });
+        return resp.status(400).json({success: false, message: "Email already registered" });
     }
         const salt=await bcrypt.genSalt();
         const passwordF=await bcrypt.hash(password, salt);
@@ -29,9 +29,20 @@ export const register=async (req,resp)=>{
             password:passwordF,
         });
         const saveUser=await newUser.save();
-        resp.status(201).json(saveUser);
+
+        const token=jwt.sign({emailid:emailid},key);
+        console.log(token);
+        const userObject =  saveUser.toObject(); // we need to convert this to plain object
+        delete userObject.password;
+
+        //delete currentUser.password;//this doesn't work
+
+        resp.json({success: true,token,userObject});
+
+        resp.status(201).json({});
     }
     catch(error){
+        console.log("this is the error in registering, ", error);
         resp.status(500).json({"error":error.message});
     }
 };
