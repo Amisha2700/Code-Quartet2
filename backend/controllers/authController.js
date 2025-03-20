@@ -39,7 +39,7 @@ export const register=async (req,resp)=>{
 
         resp.json({success: true,token,userObject});
 
-        resp.status(201).json({});
+        
     }
     catch(error){
         console.log("this is the error in registering, ", error);
