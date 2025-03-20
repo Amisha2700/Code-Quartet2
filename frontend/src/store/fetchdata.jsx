@@ -20,3 +20,40 @@ export const getFromBackend = async (link) => {
     }
   };
   
+  export const postToBackend=async(link,data)=>{
+    try{
+      const token=localStorage.getItem("token");
+      if(!token){
+        return Error('Token not found')
+      }
+      const response=await axios.post(link, data,{
+        headers:{'Authorization':`Bearer${token}`,
+                  'Content-Type':'application/json'
+      },
+    });
+      return response;
+    }
+    catch(error){
+      console.error('Request Error:', error.response ? error.response.data : error.message);
+      throw error; // Rethrow to allow handling at the calling site
+    }
+  };
+
+  export const patchToBackend=async(link,data)=>{
+    try{
+      const token=localStorage.getItem("token");
+      if(!token){
+        return Error('Token not found')
+      }
+      const response=await axios.patch(link, data,{
+        headers:{'Authorization':`Bearer${token}`,
+                  'Content-Type':'application/json'
+      },
+    });
+      return response;
+    }
+    catch(error){
+      console.error('Request Error:', error.response ? error.response.data : error.message);
+      throw error; // Rethrow to allow handling at the calling site
+    }
+  };
